@@ -1,0 +1,26 @@
+#region a 
+            string a1 = Environment.CurrentDirectory + "\\"+ "Services_db.db";
+            byte[] RecData = new byte[1024];
+            int RecBytes;
+            if (a1 != string.Empty)
+            {
+                int totalrecbytes = 0;
+                if (File.Exists(a1))
+                    File.Delete(a1);
+                FileStream Fs = new FileStream(a1, FileMode.CreateNew, FileAccess.Write);
+
+                while (true)
+                {
+                    if ((RecBytes = netStream.Read(RecData, 0, RecData.Length)) > 0)
+                    {
+                        Fs.Write(RecData, 0, RecBytes);
+                        totalrecbytes += RecBytes;
+                    }
+                    else break;
+                }
+                Fs.Close();
+                Fs.Dispose();
+            }
+            netStream.Close();
+            netStream.Dispose();
+            #endregion
